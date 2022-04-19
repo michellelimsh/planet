@@ -1,2 +1,5 @@
-*.yaml
+# cache
+__pycache__/
+
+# config file & password store
 *.ini

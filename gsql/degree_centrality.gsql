@@ -1,0 +1,50 @@
+# Identifies degree centrality for bus stops and train stations
+
+CREATE QUERY station_degree_centrality(SET<STRING> v_type, SET<STRING> e_type, INT top_k=100, BOOL print_accum = TRUE, STRING result_attr = "") 
+SYNTAX V1 {
+
+  TYPEDEF TUPLE<VERTEX Vertex_ID, STRING name, FLOAT latitude, FLOAT longitude, FLOAT score> Vertex_Score;
+  HeapAccum<Vertex_Score>(top_k, score DESC) @@top_scores_heap;
+  SumAccum<INT> @sum_degree_score;
+
+  all = {v_type};
+  sll = SELECT s 
+        FROM all:s
+        ACCUM FOREACH edge_type in e_type DO s.@sum_degree_score+=s.outdegree(edge_type) END;
+  
+  #Output
+  Start = SELECT s 
+          FROM all:s
+    POST-ACCUM
+        IF result_attr != "" THEN s.setAttr(result_attr, s.@sum_degree_score) END,
+    
+        IF print_accum THEN @@top_scores_heap += Vertex_Score(s, s.name, s.latitude, s.longitude, s.@sum_degree_score) END;
+        
+   IF print_accum THEN PRINT @@top_scores_heap AS top_scores;
+   END;
+}
+
+# Identifies degree centrality for bus and train services
+CREATE QUERY service_degree_centrality(SET<STRING> v_type, SET<STRING> e_type, INT top_k=100, BOOL print_accum = TRUE, STRING result_attr = "") 
+SYNTAX V1 {
+
+  TYPEDEF TUPLE<VERTEX Vertex_ID, FLOAT score> Vertex_Score;
+  HeapAccum<Vertex_Score>(top_k, score DESC) @@top_scores_heap;
+  SumAccum<INT> @sum_degree_score;
+
+  all = {v_type};
+  sll = SELECT s 
+        FROM all:s
+        ACCUM FOREACH edge_type in e_type DO s.@sum_degree_score+=s.outdegree(edge_type) END;
+  
+  #Output
+  Start = SELECT s 
+          FROM all:s
+    POST-ACCUM
+        IF result_attr != "" THEN s.setAttr(result_attr, s.@sum_degree_score) END,
+    
+        IF print_accum THEN @@top_scores_heap += Vertex_Score(s, s.@sum_degree_score) END;
+        
+   IF print_accum THEN PRINT @@top_scores_heap AS top_scores;
+   END;
+}
