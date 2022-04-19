@@ -8,7 +8,6 @@ import configparser
 import graphistry
 
 from pages import graphistry_page
-from pages import map_page
 from pages import bus_page
 from pages import train_page
 from pages import trip_page
@@ -39,8 +38,9 @@ st.set_page_config(**PAGE_CONFIG)
 def main():
     st.sidebar.title("PlaNET")
 
-    pages = ["About", "Graphistry", "Map View", "Bus Overview", "Train Overview", "Trip Drilldown", "Simulation"]
+    pages = ["About", "Graphistry", "Bus Overview", "Train Overview", "Trip Drilldown", "Simulation"]
     # conn = connect('configs.ini')
+    conn = None
     page = st.sidebar.radio('Navigate', 
                         options=pages, # geospatial
                         index=0)
@@ -52,17 +52,15 @@ def main():
         # print(about.read())
         st.markdown(about.read())
     elif page.lower() == 'graphistry':
-        graphistry_page.render()
-    elif page.lower() == 'map view':
-        map_page.render()
+        graphistry_page.render(conn)
     elif page.lower() == 'bus overview':
-        bus_page.render()
+        bus_page.render(conn)
     elif page.lower() == 'train overview':
-        train_page.render()
+        train_page.render(conn)
     elif page.lower() == 'trip drilldown':
-        trip_page.render()
+        trip_page.render(conn)
     elif page.lower() == 'simulation':
-        simulation_page.render()
+        simulation_page.render(conn)
     else:
         st.text('Page ' + page + ' is not implemented.')
 

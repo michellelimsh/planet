@@ -1,5 +1,5 @@
 import streamlit as st
 
-def render():
+def render(conn):
     # Main
     st.subheader("Trip Drilldown")
