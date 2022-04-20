@@ -1,0 +1,13 @@
+CREATE QUERY get_all_starting_locs (VERTEX v_input) FOR GRAPH TigyoreGraph { 
+  
+  # given a service, return all attributes of neighbour connected to it by edge as defined by e_type
+  
+  Start = {v_input};
+  
+  s1 = select t from Start:s-(:e)-Trip:t
+           where s == v_input;
+  s2 = select l from s1:t-(waypoint:e)-Location:l
+        where e.trip_seq_no == 1;
+  
+  PRINT s2;
+}

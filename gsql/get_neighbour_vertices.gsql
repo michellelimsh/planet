@@ -1,0 +1,11 @@
+CREATE QUERY get_neighbour_vertices (VERTEX v_input, STRING e_type) FOR GRAPH TigyoreGraph { 
+  
+  # given a vertex, return all attributes of neighbour connected to it by edge as defined by e_type
+  
+  Start = {v_input};
+  
+  result = select t from Start:s-(e_type:e)-:t
+           where s == v_input;
+  
+  PRINT result;
+}
