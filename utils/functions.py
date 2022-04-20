@@ -2,13 +2,16 @@
 import pydeck as pdk
 import pandas as pd
 
+from pyvis import network as net
+
+
 
 def hex_to_rgb(h):
     h = h.lstrip('#')
     return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
 
 def create_pydeck(routes, stops, locations):
-    # routes['color'] = routes['color'].apply(hex_to_rgb)
+    # Get lat lon of middle station as start view state
     mid = round(routes.shape[0]/2)
     view_lat = list(stops['latitude'])[mid]
     view_lon = list(stops['longitude'])[mid]
@@ -19,6 +22,7 @@ def create_pydeck(routes, stops, locations):
         zoom=10
     )
 
+    # add layers
     route_layer = pdk.Layer(
         type='PathLayer',
         data=routes,
@@ -44,12 +48,25 @@ def create_pydeck(routes, stops, locations):
     locations_layer = pdk.Layer(
         type='ScatterplotLayer',
         data=locations,
-        get_position=['lon', 'lat'],
+        get_position=['longitude', 'latitude'],
         auto_highlight=True,
         get_radius=100,
-        get_fill_color='[180, 0, 200, 140]',
+        opacity=0.2,
+        get_fill_color=hex_to_rgb('#BB86FC'),
         pickable=True
     )
 
-    r = pdk.Deck(layers=[route_layer, stops_layer, locations_layer], initial_view_state=view_state)
+    r = pdk.Deck(layers=[locations_layer, route_layer, stops_layer], initial_view_state=view_state)
     return r
+
+def create_graph(data, target):
+    g=net.Network(height='400px', width='100%',heading='')
+    
+    g.add_node(target, color = "green")
+
+    to = data['name'].tolist()
+    for station_name in to:
+        g.add_node(station_name, color = "blue")
+        g.add_edge(target,station_name, color = "blue")
+
+    return g

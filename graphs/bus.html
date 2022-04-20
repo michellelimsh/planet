@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 400px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "green", "id": "B67", "label": "B67", "shape": "dot"}, {"color": "blue", "id": "DIVISION AV/WYTHE AV", "label": "DIVISION AV/WYTHE AV", "shape": "dot"}, {"color": "blue", "id": "WYTHE AV/CLYMER ST", "label": "WYTHE AV/CLYMER ST", "shape": "dot"}, {"color": "blue", "id": "CLYMER ST/KENT AV", "label": "CLYMER ST/KENT AV", "shape": "dot"}, {"color": "blue", "id": "MARKET ST/5 ST", "label": "MARKET ST/5 ST", "shape": "dot"}, {"color": "blue", "id": "SANDS ST/NAVY ST", "label": "SANDS ST/NAVY ST", "shape": "dot"}, {"color": "blue", "id": "GOLD ST/SANDS ST", "label": "GOLD ST/SANDS ST", "shape": "dot"}, {"color": "blue", "id": "MC DONALD AV/VANDERBILT AV", "label": "MC DONALD AV/VANDERBILT AV", "shape": "dot"}, {"color": "blue", "id": "YORK ST/JAY ST", "label": "YORK ST/JAY ST", "shape": "dot"}, {"color": "blue", "id": "SANDS ST/PEARL ST", "label": "SANDS ST/PEARL ST", "shape": "dot"}, {"color": "blue", "id": "20 ST/10 AV", "label": "20 ST/10 AV", "shape": "dot"}, {"color": "blue", "id": "JAY ST/HIGH ST", "label": "JAY ST/HIGH ST", "shape": "dot"}, {"color": "blue", "id": "JAY ST/CHAPEL ST", "label": "JAY ST/CHAPEL ST", "shape": "dot"}, {"color": "blue", "id": "20 ST/PROSPECT PK W", "label": "20 ST/PROSPECT PK W", "shape": "dot"}, {"color": "blue", "id": "20 ST/8 AV", "label": "20 ST/8 AV", "shape": "dot"}, {"color": "blue", "id": "JAY ST/TILLARY ST", "label": "JAY ST/TILLARY ST", "shape": "dot"}, {"color": "blue", "id": "7 AV/19 ST", "label": "7 AV/19 ST", "shape": "dot"}, {"color": "blue", "id": "JAY ST/FULTON ST", "label": "JAY ST/FULTON ST", "shape": "dot"}, {"color": "blue", "id": "LIVINGSTON ST/SMITH ST", "label": "LIVINGSTON ST/SMITH ST", "shape": "dot"}, {"color": "blue", "id": "LIVINGSTON ST/HOYT ST", "label": "LIVINGSTON ST/HOYT ST", "shape": "dot"}, {"color": "blue", "id": "LIVINGSTON ST/NEVINS ST", "label": "LIVINGSTON ST/NEVINS ST", "shape": "dot"}, {"color": "blue", "id": "FLATBUSH AV/STATE ST", "label": "FLATBUSH AV/STATE ST", "shape": "dot"}, {"color": "blue", "id": "FLATBUSH AV/5 AV", "label": "FLATBUSH AV/5 AV", "shape": "dot"}, {"color": "blue", "id": "FLATBUSH AV/BERGEN ST", "label": "FLATBUSH AV/BERGEN ST", "shape": "dot"}, {"color": "blue", "id": "FLATBUSH AV/ST MARKS AV", "label": "FLATBUSH AV/ST MARKS AV", "shape": "dot"}, {"color": "blue", "id": "7 AV/FLATBUSH AV", "label": "7 AV/FLATBUSH AV", "shape": "dot"}, {"color": "blue", "id": "7 AV/STERLING PL", "label": "7 AV/STERLING PL", "shape": "dot"}, {"color": "blue", "id": "7 AV/LINCOLN PL", "label": "7 AV/LINCOLN PL", "shape": "dot"}, {"color": "blue", "id": "7 AV/BERKELEY PL", "label": "7 AV/BERKELEY PL", "shape": "dot"}, {"color": "blue", "id": "7 AV/UNION ST", "label": "7 AV/UNION ST", "shape": "dot"}, {"color": "blue", "id": "7 AV/GARFIELD PL", "label": "7 AV/GARFIELD PL", "shape": "dot"}, {"color": "blue", "id": "7 AV/3 ST", "label": "7 AV/3 ST", "shape": "dot"}, {"color": "blue", "id": "FLATBUSH AV/PACIFIC ST", "label": "FLATBUSH AV/PACIFIC ST", "shape": "dot"}, {"color": "blue", "id": "7 AV/6 ST", "label": "7 AV/6 ST", "shape": "dot"}, {"color": "blue", "id": "FLATBUSH AV/ATLANTIC AV", "label": "FLATBUSH AV/ATLANTIC AV", "shape": "dot"}, {"color": "blue", "id": "7 AV/9 ST", "label": "7 AV/9 ST", "shape": "dot"}, {"color": "blue", "id": "7 AV/11 ST", "label": "7 AV/11 ST", "shape": "dot"}, {"color": "blue", "id": "LIVINGSTON ST/BOND ST", "label": "LIVINGSTON ST/BOND ST", "shape": "dot"}, {"color": "blue", "id": "7 AV/13 ST", "label": "7 AV/13 ST", "shape": "dot"}, {"color": "blue", "id": "7 AV/15 ST", "label": "7 AV/15 ST", "shape": "dot"}, {"color": "blue", "id": "7 AV/PROSPECT AV", "label": "7 AV/PROSPECT AV", "shape": "dot"}, {"color": "blue", "id": "7 AV/18 ST", "label": "7 AV/18 ST", "shape": "dot"}, {"color": "blue", "id": "JAY ST/WILLOUGHBY ST", "label": "JAY ST/WILLOUGHBY ST", "shape": "dot"}, {"color": "blue", "id": "19 ST/8 AV", "label": "19 ST/8 AV", "shape": "dot"}, {"color": "blue", "id": "JAY ST/CONCORD ST", "label": "JAY ST/CONCORD ST", "shape": "dot"}, {"color": "blue", "id": "19 ST/PROSPECT PK W", "label": "19 ST/PROSPECT PK W", "shape": "dot"}, {"color": "blue", "id": "10 AV/20 ST", "label": "10 AV/20 ST", "shape": "dot"}, {"color": "blue", "id": "PROSPECT ST/JAY ST", "label": "PROSPECT ST/JAY ST", "shape": "dot"}, {"color": "blue", "id": "MC DONALD AV/TERRACE PL", "label": "MC DONALD AV/TERRACE PL", "shape": "dot"}, {"color": "blue", "id": "GOLD ST/YORK ST", "label": "GOLD ST/YORK ST", "shape": "dot"}, {"color": "blue", "id": "MC DONALD AV/VANDERBILT ST", "label": "MC DONALD AV/VANDERBILT ST", "shape": "dot"}, {"color": "blue", "id": "MC DONALD AV/GREENWOOD AV", "label": "MC DONALD AV/GREENWOOD AV", "shape": "dot"}, {"color": "blue", "id": "MC DONALD AV/CATON AV", "label": "MC DONALD AV/CATON AV", "shape": "dot"}, {"color": "blue", "id": "SANDS ST/JAY ST", "label": "SANDS ST/JAY ST", "shape": "dot"}, {"color": "blue", "id": "MC DONALD AV/ALBEMARLE RD", "label": "MC DONALD AV/ALBEMARLE RD", "shape": "dot"}, {"color": "blue", "id": "MC DONALD AV/CHURCH AV", "label": "MC DONALD AV/CHURCH AV", "shape": "dot"}, {"color": "blue", "id": "MC DONALD AV/AV C", "label": "MC DONALD AV/AV C", "shape": "dot"}, {"color": "blue", "id": "MC DONALD AV/CORTELYOU RD", "label": "MC DONALD AV/CORTELYOU RD", "shape": "dot"}]);
+        edges = new vis.DataSet([{"color": "blue", "from": "B67", "to": "DIVISION AV/WYTHE AV"}, {"color": "blue", "from": "B67", "to": "WYTHE AV/CLYMER ST"}, {"color": "blue", "from": "B67", "to": "CLYMER ST/KENT AV"}, {"color": "blue", "from": "B67", "to": "MARKET ST/5 ST"}, {"color": "blue", "from": "B67", "to": "SANDS ST/NAVY ST"}, {"color": "blue", "from": "B67", "to": "GOLD ST/SANDS ST"}, {"color": "blue", "from": "B67", "to": "MC DONALD AV/VANDERBILT AV"}, {"color": "blue", "from": "B67", "to": "YORK ST/JAY ST"}, {"color": "blue", "from": "B67", "to": "SANDS ST/PEARL ST"}, {"color": "blue", "from": "B67", "to": "20 ST/10 AV"}, {"color": "blue", "from": "B67", "to": "JAY ST/HIGH ST"}, {"color": "blue", "from": "B67", "to": "JAY ST/CHAPEL ST"}, {"color": "blue", "from": "B67", "to": "20 ST/PROSPECT PK W"}, {"color": "blue", "from": "B67", "to": "20 ST/8 AV"}, {"color": "blue", "from": "B67", "to": "JAY ST/TILLARY ST"}, {"color": "blue", "from": "B67", "to": "7 AV/19 ST"}, {"color": "blue", "from": "B67", "to": "JAY ST/FULTON ST"}, {"color": "blue", "from": "B67", "to": "LIVINGSTON ST/SMITH ST"}, {"color": "blue", "from": "B67", "to": "LIVINGSTON ST/HOYT ST"}, {"color": "blue", "from": "B67", "to": "LIVINGSTON ST/NEVINS ST"}, {"color": "blue", "from": "B67", "to": "FLATBUSH AV/STATE ST"}, {"color": "blue", "from": "B67", "to": "FLATBUSH AV/5 AV"}, {"color": "blue", "from": "B67", "to": "FLATBUSH AV/BERGEN ST"}, {"color": "blue", "from": "B67", "to": "FLATBUSH AV/ST MARKS AV"}, {"color": "blue", "from": "B67", "to": "7 AV/FLATBUSH AV"}, {"color": "blue", "from": "B67", "to": "7 AV/STERLING PL"}, {"color": "blue", "from": "B67", "to": "7 AV/LINCOLN PL"}, {"color": "blue", "from": "B67", "to": "7 AV/BERKELEY PL"}, {"color": "blue", "from": "B67", "to": "7 AV/UNION ST"}, {"color": "blue", "from": "B67", "to": "7 AV/GARFIELD PL"}, {"color": "blue", "from": "B67", "to": "7 AV/3 ST"}, {"color": "blue", "from": "B67", "to": "FLATBUSH AV/PACIFIC ST"}, {"color": "blue", "from": "B67", "to": "7 AV/6 ST"}, {"color": "blue", "from": "B67", "to": "FLATBUSH AV/ATLANTIC AV"}, {"color": "blue", "from": "B67", "to": "7 AV/9 ST"}, {"color": "blue", "from": "B67", "to": "7 AV/11 ST"}, {"color": "blue", "from": "B67", "to": "LIVINGSTON ST/BOND ST"}, {"color": "blue", "from": "B67", "to": "7 AV/13 ST"}, {"color": "blue", "from": "B67", "to": "7 AV/15 ST"}, {"color": "blue", "from": "B67", "to": "7 AV/PROSPECT AV"}, {"color": "blue", "from": "B67", "to": "7 AV/18 ST"}, {"color": "blue", "from": "B67", "to": "JAY ST/WILLOUGHBY ST"}, {"color": "blue", "from": "B67", "to": "19 ST/8 AV"}, {"color": "blue", "from": "B67", "to": "JAY ST/CONCORD ST"}, {"color": "blue", "from": "B67", "to": "19 ST/PROSPECT PK W"}, {"color": "blue", "from": "B67", "to": "10 AV/20 ST"}, {"color": "blue", "from": "B67", "to": "PROSPECT ST/JAY ST"}, {"color": "blue", "from": "B67", "to": "MC DONALD AV/TERRACE PL"}, {"color": "blue", "from": "B67", "to": "GOLD ST/YORK ST"}, {"color": "blue", "from": "B67", "to": "MC DONALD AV/VANDERBILT ST"}, {"color": "blue", "from": "B67", "to": "MC DONALD AV/GREENWOOD AV"}, {"color": "blue", "from": "B67", "to": "MC DONALD AV/CATON AV"}, {"color": "blue", "from": "B67", "to": "SANDS ST/JAY ST"}, {"color": "blue", "from": "B67", "to": "MC DONALD AV/ALBEMARLE RD"}, {"color": "blue", "from": "B67", "to": "MC DONALD AV/CHURCH AV"}, {"color": "blue", "from": "B67", "to": "MC DONALD AV/AV C"}, {"color": "blue", "from": "B67", "to": "MC DONALD AV/CORTELYOU RD"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

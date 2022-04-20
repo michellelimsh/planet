@@ -29,6 +29,11 @@ def connect(config_path):
     print('Connected')
 
     return conn
+
+def run_query(conn, query_name, params, output_name):
+    results = conn.runInstalledQuery(query_name, params=params)
+    df = pd.DataFrame(results[0][output_name])
+    return df
     
 def fetch_map_data(conn, all_routes, station_vertex, service_vertex, target):
     # Filter services for chosen target
@@ -46,8 +51,34 @@ def fetch_map_data(conn, all_routes, station_vertex, service_vertex, target):
 
     # Define path
     target_service['path'] = [target_stations[['longitude','latitude']].values.tolist()]
+    
+    # Fetch trips
+    trips = run_query(conn, "get_all_starting_locs", 
+                      {"v_input":target,"v_input.type":service_vertex, "e_type":"utilise"}, 
+                      's2')["attributes"].apply(pd.Series) 
 
-    return target_service, target_stations[['v_id', 'name', 'latitude', 'longitude']]
+    return target_service, target_stations[['v_id', 'name', 'latitude', 'longitude']], trips
 
 
 
+def fetch_centriality_data(conn, limit):
+    TrainStation =run_query(conn, "station_degree_centrality",
+                   {'v_type':'TrainStation', 'e_type':'waypoint', 'top_k':limit},
+                   "top_scores"
+                    )[['name', 'score']]
+
+    BusStop =run_query(conn, "station_degree_centrality",
+               {'v_type':'BusStop', 'e_type':'waypoint', 'top_k':limit},
+               "top_scores"
+                )[['name', 'score']]
+
+    TrainService =run_query(conn, "service_degree_centrality",
+                   {'v_type':'TrainService', 'e_type':'utilise', 'top_k':limit},
+                   "top_scores"
+                    )[['Vertex_ID', 'score']].rename(columns={"Vertex_ID": "name"})
+
+    BusService = run_query(conn, "service_degree_centrality",
+                   {'v_type':'BusService', 'e_type':'utilise', 'top_k':limit},
+                   "top_scores"
+                    )[['Vertex_ID', 'score']].rename(columns={"Vertex_ID": "name"})
+    return TrainStation, BusStop, TrainService, BusService

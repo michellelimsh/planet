@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 400px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "green", "id": "1", "label": "1", "shape": "dot"}, {"color": "blue", "id": "Van Cortlandt Park-242 St", "label": "Van Cortlandt Park-242 St", "shape": "dot"}, {"color": "blue", "id": "238 St", "label": "238 St", "shape": "dot"}, {"color": "blue", "id": "231 St", "label": "231 St", "shape": "dot"}, {"color": "blue", "id": "Marble Hill-225 St", "label": "Marble Hill-225 St", "shape": "dot"}, {"color": "blue", "id": "215 St", "label": "215 St", "shape": "dot"}, {"color": "blue", "id": "207 St", "label": "207 St", "shape": "dot"}, {"color": "blue", "id": "Dyckman St", "label": "Dyckman St", "shape": "dot"}, {"color": "blue", "id": "191 St", "label": "191 St", "shape": "dot"}, {"color": "blue", "id": "181 St", "label": "181 St", "shape": "dot"}, {"color": "blue", "id": "168 St-Washington Hts", "label": "168 St-Washington Hts", "shape": "dot"}, {"color": "blue", "id": "157 St", "label": "157 St", "shape": "dot"}, {"color": "blue", "id": "145 St", "label": "145 St", "shape": "dot"}, {"color": "blue", "id": "137 St-City College", "label": "137 St-City College", "shape": "dot"}, {"color": "blue", "id": "125 St", "label": "125 St", "shape": "dot"}, {"color": "blue", "id": "116 St-Columbia University", "label": "116 St-Columbia University", "shape": "dot"}, {"color": "blue", "id": "Cathedral Pkwy (110 St)", "label": "Cathedral Pkwy (110 St)", "shape": "dot"}, {"color": "blue", "id": "103 St", "label": "103 St", "shape": "dot"}, {"color": "blue", "id": "96 St", "label": "96 St", "shape": "dot"}, {"color": "blue", "id": "86 St", "label": "86 St", "shape": "dot"}, {"color": "blue", "id": "79 St", "label": "79 St", "shape": "dot"}, {"color": "blue", "id": "72 St", "label": "72 St", "shape": "dot"}, {"color": "blue", "id": "66 St-Lincoln Center", "label": "66 St-Lincoln Center", "shape": "dot"}, {"color": "blue", "id": "59 St-Columbus Circle", "label": "59 St-Columbus Circle", "shape": "dot"}, {"color": "blue", "id": "50 St", "label": "50 St", "shape": "dot"}, {"color": "blue", "id": "Times Sq-42 St", "label": "Times Sq-42 St", "shape": "dot"}, {"color": "blue", "id": "34 St-Penn Station", "label": "34 St-Penn Station", "shape": "dot"}, {"color": "blue", "id": "28 St", "label": "28 St", "shape": "dot"}, {"color": "blue", "id": "23 St", "label": "23 St", "shape": "dot"}, {"color": "blue", "id": "18 St", "label": "18 St", "shape": "dot"}, {"color": "blue", "id": "14 St", "label": "14 St", "shape": "dot"}, {"color": "blue", "id": "Christopher St-Sheridan Sq", "label": "Christopher St-Sheridan Sq", "shape": "dot"}, {"color": "blue", "id": "Houston St", "label": "Houston St", "shape": "dot"}, {"color": "blue", "id": "Canal St", "label": "Canal St", "shape": "dot"}, {"color": "blue", "id": "Franklin St", "label": "Franklin St", "shape": "dot"}, {"color": "blue", "id": "Chambers St", "label": "Chambers St", "shape": "dot"}, {"color": "blue", "id": "WTC Cortlandt", "label": "WTC Cortlandt", "shape": "dot"}, {"color": "blue", "id": "Rector St", "label": "Rector St", "shape": "dot"}, {"color": "blue", "id": "South Ferry", "label": "South Ferry", "shape": "dot"}]);
+        edges = new vis.DataSet([{"color": "blue", "from": "1", "to": "Van Cortlandt Park-242 St"}, {"color": "blue", "from": "1", "to": "238 St"}, {"color": "blue", "from": "1", "to": "231 St"}, {"color": "blue", "from": "1", "to": "Marble Hill-225 St"}, {"color": "blue", "from": "1", "to": "215 St"}, {"color": "blue", "from": "1", "to": "207 St"}, {"color": "blue", "from": "1", "to": "Dyckman St"}, {"color": "blue", "from": "1", "to": "191 St"}, {"color": "blue", "from": "1", "to": "181 St"}, {"color": "blue", "from": "1", "to": "168 St-Washington Hts"}, {"color": "blue", "from": "1", "to": "157 St"}, {"color": "blue", "from": "1", "to": "145 St"}, {"color": "blue", "from": "1", "to": "137 St-City College"}, {"color": "blue", "from": "1", "to": "125 St"}, {"color": "blue", "from": "1", "to": "116 St-Columbia University"}, {"color": "blue", "from": "1", "to": "Cathedral Pkwy (110 St)"}, {"color": "blue", "from": "1", "to": "103 St"}, {"color": "blue", "from": "1", "to": "96 St"}, {"color": "blue", "from": "1", "to": "86 St"}, {"color": "blue", "from": "1", "to": "79 St"}, {"color": "blue", "from": "1", "to": "72 St"}, {"color": "blue", "from": "1", "to": "66 St-Lincoln Center"}, {"color": "blue", "from": "1", "to": "59 St-Columbus Circle"}, {"color": "blue", "from": "1", "to": "50 St"}, {"color": "blue", "from": "1", "to": "Times Sq-42 St"}, {"color": "blue", "from": "1", "to": "34 St-Penn Station"}, {"color": "blue", "from": "1", "to": "28 St"}, {"color": "blue", "from": "1", "to": "23 St"}, {"color": "blue", "from": "1", "to": "18 St"}, {"color": "blue", "from": "1", "to": "14 St"}, {"color": "blue", "from": "1", "to": "Christopher St-Sheridan Sq"}, {"color": "blue", "from": "1", "to": "Houston St"}, {"color": "blue", "from": "1", "to": "Canal St"}, {"color": "blue", "from": "1", "to": "Franklin St"}, {"color": "blue", "from": "1", "to": "Chambers St"}, {"color": "blue", "from": "1", "to": "WTC Cortlandt"}, {"color": "blue", "from": "1", "to": "Rector St"}, {"color": "blue", "from": "1", "to": "South Ferry"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
