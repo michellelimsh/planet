@@ -33,6 +33,7 @@ def connect(config_path):
 
 def run_query(conn, query_name, params, output_name):
     results = conn.runInstalledQuery(query_name, params=params)
+    # print(results[0]['top_scores'])
     df = pd.DataFrame(results[0][output_name])
     return df
 
@@ -64,15 +65,24 @@ def fetch_map_data(conn, all_routes, station_vertex, service_vertex, target):
 
 
 def fetch_centriality_data(conn, limit):
-    TrainStation =run_query(conn, "station_degree_centrality",
-                   {'v_type':'TrainStation', 'e_type':'waypoint', 'top_k':limit},
-                   "top_scores"
-                    )[['name', 'score']]
+    size= 0
+    diff = limit - size
+    k = diff
+    while diff > 0:
+      k += 1
+      TrainStation =run_query(conn, "station_degree_centrality",
+                     {'v_type':'TrainStation', 'e_type':'waypoint', 'top_k':k},
+                     "top_scores"
+                      )[['name', 'score']].drop_duplicates('name').reset_index(drop=True)
+      size = TrainStation.shape[0]
+      diff = limit - size
 
     BusStop =run_query(conn, "station_degree_centrality",
                {'v_type':'BusStop', 'e_type':'waypoint', 'top_k':limit},
                "top_scores"
-                )[['name', 'score']]
+                )[['Vertex_ID', 'score']]
+    BusStop['Vertex_ID'] = BusStop['Vertex_ID'].astype(str)
+    BusStop['name'] = BusStop['Vertex_ID'].str.replace('.0', '')
 
     TrainService =run_query(conn, "service_degree_centrality",
                    {'v_type':'TrainService', 'e_type':'utilise', 'top_k':limit},
@@ -82,7 +92,7 @@ def fetch_centriality_data(conn, limit):
     BusService = run_query(conn, "service_degree_centrality",
                    {'v_type':'BusService', 'e_type':'utilise', 'top_k':limit},
                    "top_scores"
-                    )[['Vertex_ID', 'score']].rename(columns={"Vertex_ID": "name"})
+                    ).rename(columns={"Vertex_ID": "name"})#[['Vertex_ID', 'score']].rename(columns={"Vertex_ID": "name"})
     return TrainStation, BusStop, TrainService, BusService
 
 
