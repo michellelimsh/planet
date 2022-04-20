@@ -1,0 +1,11 @@
+CREATE QUERY get_all_bus_services_edges() FOR GRAPH TigyoreGraph { 
+  
+  ListAccum<edge> @@edgeList;
+    
+  Start = {BusService.*};
+  
+  s1 = select t from Start:s-(:e)-:t #to bus stops and trips
+       ACCUM @@edgeList += e;
+  
+  print @@edgeList;
+}

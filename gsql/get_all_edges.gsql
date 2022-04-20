@@ -1,0 +1,14 @@
+CREATE QUERY get_all_edges() FOR GRAPH TigyoreGraph { 
+  
+  ListAccum<edge> @@edgeList;
+    
+  Start = {Trip.*};
+  
+  s1 = select st from Start:s-(waypoint:e)-:st #covers both bus stops and train stations from trips
+       ACCUM @@edgeList += e;
+  
+  S2 = select ser from s1:st-(serve:e)-:ser # gets stop - service edges
+        ACCUM @@edgeList += e;
+  
+  print @@edgeList;
+}
