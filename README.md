@@ -2,7 +2,6 @@
 
 PlaNET is an application designed for city planners to better understand and improve their transportation systems
 
-
 ## Inspiration
 
 Public transport is the foundation of human mobility in a modern society. Building an effective public transport system is pivotal to promoting a car-lite society. Often, urban areas are subjected to convoluted public transport networks, swaying commuters towards personal vehicles as their preferred mode of transport. Apart from the environmental impacts of shifting away from individual vehicles, it relieves traffic congestion. Public transport systems consist of various intricate mechanisms and factors, which poses a challenge when planning and implementing an effective transport system that brings large volumes of commuters from one location to another. Furthermore, developing effective public transport infrastructure requires a deep understanding of qualitative factors, such as commuter preferences and behaviours. 
@@ -14,6 +13,8 @@ This work aims to alleviate challenges city planners face when organising the mu
 PlaNET is a project done using TigerGraph which aims to aid city planners in building effective public transportation systems by better understanding commuter behaviour. It helps to visualise and understand how the public transport network serves commuter journeys and identify gaps and opportunities to optimise efficiency of public transport services to cater to commuter travel preferences. Streamlit is used as a reporting tool to help understand the graph network. 
 
 ## How we built it
+
+At it's core, PlaNET queries from a TigerGraph database, traversing the graph and calculating metrics. With the help of GraphStudio, queries are written, debugged, tested and installed to the graph. Streamlit is used as a frontend framework to visualise the results, uncovering insights.
 
 ## Database Schema
 
@@ -32,6 +33,7 @@ In order to analyse the public transport system on its effectiveness, real world
 It is challenging to obtain a stuctured form of these data for a particular city as they are not readily available in a tabular format. Upon research, New York City (NYC) was identified to be an urban location that have the aforementioned datasets.
 
 ### Bus Routes and Bus Stops
+
 The bus stop dataset is obtained from Miranda Adams's [NYC-bus-stops-by-route Github page](https://github.com/miranda-adams/NYC-bus-stops-by-route), which provides a dataset with the bus stop names, their IDs as well as their latitudes and longitudes.
 
 The bus routes dataset is obtained from the [Metropolitan Transportation Authority (MTA) website](https://bustime.mta.info/m), where the mobile version of their Bus Time page lists all their bus services. Searching for a bus service lists all the bus stops, their IDs and their sequences. This data is joined with the data from the Github page to get the latitude and longitude for each bus stop.
@@ -52,7 +54,7 @@ For trips, the fare card data by the State of New York for MTA is considered, bu
 
 Thus, another dataset that is more rich should be used. Since there is no trip level dataset for public transport, the [New York City Taxi Trip Duration](https://www.kaggle.com/competitions/nyc-taxi-trip-duration/data) dataset is used. In this dataset, the coordinates (latitude and longitude) for both origin and destination are available. Coupled with the Google Maps Directions API (elaborated in the following section), this dataset for taxi trips can be a proxy to represent public transport trips.
 
-## Data Processing
+## Data Processing and Loading
 
 ### Subway Routes and Subway Stations
 
@@ -72,6 +74,12 @@ After processing each trip, the transit directions legs are then mapped with `Bu
 
 ## Challenges we ran into
 
+Using and learning about graph databases meant that our team had to think of storing data from a different perspective than traditional databases. Most of us were new to graph databases and having the TigerGraph 101 tutorial helped us to familiarise ourselves not only with TigerGraph’s platform, but also provided an overview of graph databases to get us started on our project. 
+
+Despite this, we still faced an uphill battle trying to define a schema for and mapping transportation systems to public transport utilisation trips data as there were multiple relationships and variables to consider. For example, while loading data into the graph database, we encountered problems such as graph databases defaulting to upsert when inserting data that has the same source and target. This made us rethink and recreate our schema from scratch to accommodate this behaviour. 
+
+We also faced issues where there were syntax inconsistencies and compatibility issues between the new syntax and the current version of GraphStudio which encumbered our progress in schema creation and querying. Lastly, documentation and third-party resources are sparse.
+
 ## Accomplishments that we're proud of
 
 ## What we learned
@@ -85,4 +93,8 @@ After processing each trip, the transit directions legs are then mapped with `Bu
 ## What's next for PlaNET
 
 
-## Acknowledgements
+## Devpost Link
+
+
+## GitHub Link
+
