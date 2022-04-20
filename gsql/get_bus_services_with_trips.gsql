@@ -1,0 +1,10 @@
+CREATE QUERY get_bus_services_with_trips () FOR GRAPH TigyoreGraph { 
+  
+  # gets all bus services utilised by trips
+  
+  Start = {Trip.*};
+  
+  result = select t from Start:s-(utilise:e)-BusService:t;
+  
+  PRINT result;
+}
