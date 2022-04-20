@@ -93,7 +93,7 @@ def fetch_centriality_data(conn, limit):
                    {'v_type':'BusService', 'e_type':'utilise', 'top_k':limit},
                    "top_scores"
                     ).rename(columns={"Vertex_ID": "name"})#[['Vertex_ID', 'score']].rename(columns={"Vertex_ID": "name"})
-    return TrainStation, BusStop, TrainService, BusService
+    return TrainStation, BusStop[['name', 'score']], TrainService, BusService
 
 
 def fetch_bus_services(conn):
