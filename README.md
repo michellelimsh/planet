@@ -1,6 +1,6 @@
-# PlaNET
+# PlaNET: Blueprinting the Future of Transport
 
-PlaNET is an application designed for city planners to better understand and improve their transportation systems
+PlaNET is an application designed for city planners to better understand and improve their transportation systems.
 
 ## Inspiration
 
@@ -68,7 +68,7 @@ As for the subway stations dataset, the stops dataset is joined with the stop ti
 
 ### Trips
 
-The origin and destination coordinates for each taxi trip are extracted. To retrieve the travel mode (to public transport), the [Python client for Google Maps Directions API](https://github.com/googlemaps/google-maps-services-python) is used. The departure times for taxis are used when generating the public transport routes.
+The origin and destination coordinates from taxi trips sampled on a range of 5 days are extracted. To retrieve the travel mode (to public transport), the [Python client for Google Maps Directions API](https://github.com/googlemaps/google-maps-services-python) is used. The departure times for taxis are used when generating the public transport routes.
 
 The first route for each trip is extracted from the Directions API response. Each route is broken down into multiple directions legs, where details of how to get from one location to another is detailed.
 
@@ -95,8 +95,8 @@ We learnt much more about TigerGraph as a platform, constructing GSQL, the Pytho
 ## What's next for PlaNET
 
   - Utilise GNN to model and simulate trips to better understand and interpret consumer trip preferences
-  - Perform geospatial analysis
-  - Getting actual farecard data to analyse public transport trips
+  - Perform geospatial analysis on the transport network
+  - Getting actual public transport trips data to analyse 
 
 
 ## Devpost Link
