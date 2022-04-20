@@ -5,17 +5,19 @@ PlaNET is an application designed for city planners to better understand and imp
 
 ## Inspiration
 
-- Deliver transport insights to diagnose and validate assumptions to plan and develop an efficient public transport network
+Public transport is the foundation of human mobility in a modern society. Building an effective public transport system is pivotal to promoting a car-lite society. Often, urban areas are subjected to convoluted public transport networks, swaying commuters towards personal vehicles as their preferred mode of transport. Apart from the environmental impacts of shifting away from individual vehicles, it relieves traffic congestion. Public transport systems consist of various intricate mechanisms and factors, which poses a challenge when planning and implementing an effective transport system that brings large volumes of commuters from one location to another. Furthermore, developing effective public transport infrastructure requires a deep understanding of qualitative factors, such as commuter preferences and behaviours. 
 
-- Analysis to identify gaps and opportunities within their public transport network
+This work aims to alleviate challenges city planners face when organising the multitudes of moving components by leveraging graph database and graph analytics to uncover insights on how the public transport network is serving commuters in their journeys. From there, gaps and opportunities to optimise efficiency of public transport services can be identified to improve journeys.
 
-- Understanding commuter transport preferencesd usage of public transport services
+## What it does
 
-- Visualise and understand how the public transport network serves commuter journeys and identify gaps and opportunities to optimise efficiency of public transport services to commuter travel preferences
+PlaNET is a project done using TigerGraph which aims to aid city planners in building effective public transportation systems by better understanding commuter behaviour. It helps to visualise and understand how the public transport network serves commuter journeys and identify gaps and opportunities to optimise efficiency of public transport services to cater to commuter travel preferences. Streamlit is used as a reporting tool to help understand the graph network. 
 
-## Problem Statement: Develop Effective Public Transportation System
+## How we built it
 
 ## Database Schema
+
+![](./images/Schema.png)
 
 ## Datasets
 
@@ -47,8 +49,7 @@ For trips, the fare card data by the State of New York for MTA is considered, bu
 
 Thus, another dataset that is more rich should be used. Since there is no trip level dataset for public transport, the [New York City Taxi Trip Duration](https://www.kaggle.com/competitions/nyc-taxi-trip-duration/data) dataset is used. In this dataset, the coordinates (latitude and longitude) for both origin and destination are available. Coupled with the Google Maps Directions API (elaborated in the following section), this dataset for taxi trips can be a proxy to represent public transport trips.
 
-## Data Processing and Loading
-
+## Data Processing
 
 ### Subway Routes and Subway Stations
 
@@ -65,5 +66,20 @@ The first route for each trip is extracted from the Directions API response. Eac
 For instance, a route from the Empire State Building to Central Park starts from walking to 34 St - Herald Sq station, then taking the F Line (subway) to 57 Street station, then walking to Central Park. This route consists of 3 legs (walk, subway, walk) and modelled as 4 `waypoint` (Empire State Building, 34 St - Herald Sq station, 57 Street station, Central Park) and `utilise` 1 public transport (subway) service (F Line (subway) from 34 St - Herald Sq station to 57 Street station).
 
 After processing each trip, the transit directions legs are then mapped with `BusService`, `BusStop`, `TrainService` and `TrainStation`.
+
+## Challenges we ran into
+
+## Accomplishments that we're proud of
+
+## What we learned
+
+- TigerGraph
+- GSQL
+- Python client for Google Maps Directions API
+- More about New York City!
+
+
+## What's next for PlaNET
+
 
 ## Acknowledgements
