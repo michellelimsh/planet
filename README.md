@@ -86,15 +86,17 @@ We also faced issues where there were syntax inconsistencies and compatibility i
 
 ## Accomplishments that we're proud of
 
+We are proud that we managed to create our own graph database schema in TigerGraph, and load the data into the graph database successfully. It was a challenging experience when developing the relevant GSQL queries. Apart from TigerGraph, we learnt how to utilise external APIs to enrich our data - using Google Maps Directions API to structure public transport trips.
+
 ## What we learned
 
-- TigerGraph
-- GSQL
-- Python client for Google Maps Directions API
-- More about New York City!
-
+We learnt much more about TigerGraph as a platform, constructing GSQL, the Python client for Google Maps Directions API. Finally, we also learnt more about New York City!
 
 ## What's next for PlaNET
+
+  - Utilise GNN to model and simulate trips to better understand and interpret consumer trip preferences
+  - Perform geospatial analysis
+  - Getting actual farecard data to analyse public transport trips
 
 
 ## Devpost Link
