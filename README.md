@@ -34,11 +34,7 @@ It is challenging to obtain a stuctured form of these data for a particular city
 
 ### Bus Routes and Bus Stops
 
-The bus stop dataset is obtained from Miranda Adams's [NYC-bus-stops-by-route Github page](https://github.com/miranda-adams/NYC-bus-stops-by-route), which provides a dataset with the bus stop names, their IDs as well as their latitudes and longitudes.
-
-The bus routes dataset is obtained from the [Metropolitan Transportation Authority (MTA) website](https://bustime.mta.info/m), where the mobile version of their Bus Time page lists all their bus services. Searching for a bus service lists all the bus stops, their IDs and their sequences. This data is joined with the data from the Github page to get the latitude and longitude for each bus stop.
-
-The bus service dataset is derived from the bus routes dataset, containing the unique bus services along with the directions each bus service operates in.
+The bus stop dataset is obtained from Miranda Adams's [NYC-bus-stops-by-route Github page](https://github.com/miranda-adams/NYC-bus-stops-by-route). The bus routes dataset is obtained from the [Metropolitan Transportation Authority (MTA) website](https://bustime.mta.info/m).
 
 ### Subway Routes and Subway Stations
 
@@ -55,6 +51,14 @@ For trips, the fare card data by the State of New York for MTA is considered, bu
 Thus, another dataset that is more rich should be used. Since there is no trip level dataset for public transport, the [New York City Taxi Trip Duration](https://www.kaggle.com/competitions/nyc-taxi-trip-duration/data) dataset is used. In this dataset, the coordinates (latitude and longitude) for both origin and destination are available. Coupled with the Google Maps Directions API (elaborated in the following section), this dataset for taxi trips can be a proxy to represent public transport trips.
 
 ## Data Processing and Loading
+
+### Bus Routes and Bus Stops
+
+The bus stop dataset is obtained from Miranda Adams's [NYC-bus-stops-by-route Github page](https://github.com/miranda-adams/NYC-bus-stops-by-route), which provides a dataset with the bus stop names, their IDs as well as their latitudes and longitudes. This bus routes dataset is used to load the vertex `BusStation`.
+
+The bus routes dataset is obtained from the [Metropolitan Transportation Authority (MTA) website](https://bustime.mta.info/m), where the mobile version of their Bus Time page lists all their bus services. Searching for a bus service lists all the bus stops, their IDs and their sequences. This data is joined with the data from the Github page to get the latitude and longitude for each bus stop. This bus routes dataset is used to load the edge `serve` from `BusService` to `BusStation`.
+
+The bus routes dataset is then used to derive the bus service dataset, which contains the unique bus services along with the directions that the buses operates in. This bus service dataset is used to load the vertex `BusService`.
 
 ### Subway Routes and Subway Stations
 
