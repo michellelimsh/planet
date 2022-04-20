@@ -1,6 +1,6 @@
 import pyTigerGraph as tg
 import pandas as pd
-
+from datetime import datetime, date
 import configparser
 import graphistry
 
@@ -30,10 +30,12 @@ def connect(config_path):
 
     return conn
 
+
 def run_query(conn, query_name, params, output_name):
     results = conn.runInstalledQuery(query_name, params=params)
     df = pd.DataFrame(results[0][output_name])
     return df
+
     
 def fetch_map_data(conn, all_routes, station_vertex, service_vertex, target):
     # Filter services for chosen target
@@ -82,3 +84,30 @@ def fetch_centriality_data(conn, limit):
                    "top_scores"
                     )[['Vertex_ID', 'score']].rename(columns={"Vertex_ID": "name"})
     return TrainStation, BusStop, TrainService, BusService
+
+
+def fetch_bus_services(conn):
+    results = conn.runInstalledQuery("get_bus_services_with_trips")
+    bus_services = [r["attributes"]["name"] for r in results[0]["result"] if r["attributes"]["name"]] 
+    bus_services.sort()
+    return bus_services
+
+
+def fetch_neighbour_trips(conn, target, service_type):
+    df = run_query(conn, "get_neighbour_vertices", 
+            {"v_input":target,"v_input.type":service_type, "e_type":'utilise'}, 
+            'result')["attributes"].apply(pd.Series)
+
+    df['start'] = df['start_time'].apply(lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
+    df['end'] = df['end_time'].apply(lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
+
+    df['start_time'] = df['start'].apply(lambda x: x.hour)
+    df['end_time'] = df['end'].apply(lambda x: x.hour)
+
+    df['travel_time'] = df['end'] - df['start']
+    df['travel_time'] = df['travel_time'].apply(lambda x: x.seconds)
+    return df
+
+
+def fetch_all_trips(conn):
+    trips = conn.getVertexDataframe('Trips', timeout=0)
