@@ -2,7 +2,6 @@ import pyTigerGraph as tg
 import pandas as pd
 from datetime import datetime, date
 import configparser
-import  
 
 
 def connect(config_path):
