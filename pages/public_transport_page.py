@@ -10,6 +10,7 @@ import plotly.express as px
 def render(conn):
     # Main
     st.header("Public Transport Network Analysis")
+    st.subheader("")
 
     c1, c2, c3, c4, c5, c6 = st.columns(6)
     with c1:
@@ -25,7 +26,8 @@ def render(conn):
     with c6:
         st.metric("Bus Stops", 12209 )
 
-    st.subheader("Centriality Analysis")
+    st.subheader("")
+    st.subheader("Centrality Analysis")
 
     limit = st.number_input(label='max to display', value=10)
 
