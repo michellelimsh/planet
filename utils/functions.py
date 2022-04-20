@@ -1,6 +1,6 @@
 
 import pydeck as pdk
-
+import pandas as pd
 
 
 def hex_to_rgb(h):
@@ -9,10 +9,13 @@ def hex_to_rgb(h):
 
 def create_pydeck(routes, stops, locations):
     # routes['color'] = routes['color'].apply(hex_to_rgb)
+    mid = round(routes.shape[0]/2)
+    view_lat = list(stops['latitude'])[mid]
+    view_lon = list(stops['longitude'])[mid]
 
     view_state = pdk.ViewState(
-        latitude=37.782556,
-        longitude=-122.3484867,
+        latitude=view_lat,
+        longitude=view_lon,
         zoom=10
     )
 
@@ -30,7 +33,7 @@ def create_pydeck(routes, stops, locations):
     stops_layer = pdk.Layer(
         type='ScatterplotLayer',
         data=stops,
-        get_position=['lon', 'lat'],
+        get_position=['longitude', 'latitude'],
         auto_highlight=True,
         get_radius=150,
         opacity=0.7,
