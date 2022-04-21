@@ -1,6 +1,6 @@
 # PlaNET: Blueprinting the Future of Transport
 
-PlaNET is an application designed for city planners to better understand and improve their transportation systems.
+PlaNET is a project developed to help city planners better understand and improve their transportation systems.
 
 ## Inspiration
 
