@@ -133,6 +133,8 @@ We learnt much more about TigerGraph as a platform, constructing GSQL, the Pytho
 
 ## Devpost Link
 
+https://devpost.com/software/planet-qr5xeb
 
 ## GitHub Link
 
+https://github.com/michellelimsh/planet
