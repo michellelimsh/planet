@@ -4,13 +4,17 @@ PlaNET is a project developed to help city planners better understand and improv
 
 ## Inspiration
 
-Public transport is the foundation of human mobility in a modern society. Building an effective and robust public transport system is pivotal in promoting a car-lite society. Often, urban areas are subjected to convoluted public transport networks, swaying commuters towards personal vehicles as their preferred mode of transport. Apart from the environmental impacts shifting away from individual vehicles brings, an efficient public transport system relieves traffic congestion. Public transport systems consist of various intricate mechanisms and factors, which poses a challenge when governments and city planners design and implement an effective transport system network that serve a large volume of commuters in their daily lives. Furthermore, developing effective public transport infrastructure requires a deep understanding of qualitative factors, such as commuter preferences and behaviours. 
+Public transport is the foundation of human mobility in a modern society. Building an effective and robust public transport system is pivotal in promoting a car-lite society. Often, urban areas are subjected to convoluted public transport networks, swaying commuters towards personal vehicles as their preferred mode of transport. Apart from the environmental impacts shifting away from individual vehicles brings, an efficient public transport system relieves traffic congestion. 
+
+Public transport systems consist of various intricate mechanisms and factors, which poses a challenge when governments and city planners design and implement an effective transport system network that serve a large volume of commuters in their daily lives. 
+
+Furthermore, developing effective public transport infrastructure requires a deep understanding of qualitative factors, such as commuter preferences and behaviours.
 
 This work aims to alleviate challenges city planners face when organising the multitudes of moving components by leveraging graph database and graph analytics to uncover insights on how the public transport network is serving commuters in their journeys. From there, gaps and opportunities to optimise efficiency of public transport services can be identified to improve journeys.
 
 ## What it does
 
-PlaNET is a project done using TigerGraph which aims to aid city planners in building effective public transportation systems by better understanding commuter behaviour. It helps to visualise and understand how the public transport network serves commuter journeys and identify gaps and opportunities to optimise efficiency of public transport services to cater to commuter travel preferences. Streamlit is used as a reporting tool to help understand the graph network. 
+PlaNET is a project done using TigerGraph which aims to aid city planners in building effective public transportation systems by better understanding commuter behaviour. It helps to visualise and understand how the public transport network serves commuter journeys and identify gaps and opportunities to optimise efficiency of public transport services to cater to commuter travel preferences. Streamlit is used as a reporting tool to enhance the insights derived from utilising TigerGraph's suite of analytics capabilities.
 
 ## How we built it
 
@@ -76,7 +80,24 @@ For instance, a route from the Empire State Building to Central Park starts from
 
 After processing each trip, the transit directions legs are then mapped with `BusService`, `BusStop`, `TrainService` and `TrainStation`.
 
-## Insights
+### Reporting Tool
+
+PlaNET's reporting tool is built using streamlit to enhance insights extracted from the network structure of the data. 
+
+This consists of three dashboards:
+- Public Transport Network Analysis
+- Bus Network Analysis
+- Train Network Analysis
+
+#### Data Post Processing
+
+Capitalising on TigerGraph's capability to store pre-built queries within the database, we created queries to extract and transform data from PlaNET's database. This greatly streamlines the interactions between the client and serve side, both from a development and user standpoint.
+
+Furthermore, utilising TigerGraph's in-built GSQLs and algorithms, PlaNET calculates the degree centrality to report the top k Train Stations, Train Services, Bus Stops, and Bus Services on the streamlit app.
+
+PlaNET also explores TigerGraph's python integration by leveraging the in-built pandas functions within the pyTigerGraph package to fetch data from the database to send to the front-end application.
+
+#### Insights
 
 ![](./images/Trains.png)
 ![](./images/Bus.png)
