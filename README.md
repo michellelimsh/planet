@@ -4,7 +4,7 @@ PlaNET is an application designed for city planners to better understand and imp
 
 ## Inspiration
 
-Public transport is the foundation of human mobility in a modern society. Building an effective public transport system is pivotal to promoting a car-lite society. Often, urban areas are subjected to convoluted public transport networks, swaying commuters towards personal vehicles as their preferred mode of transport. Apart from the environmental impacts of shifting away from individual vehicles, it relieves traffic congestion. Public transport systems consist of various intricate mechanisms and factors, which poses a challenge when planning and implementing an effective transport system that brings large volumes of commuters from one location to another. Furthermore, developing effective public transport infrastructure requires a deep understanding of qualitative factors, such as commuter preferences and behaviours. 
+Public transport is the foundation of human mobility in a modern society. Building an effective and robust public transport system is pivotal in promoting a car-lite society. Often, urban areas are subjected to convoluted public transport networks, swaying commuters towards personal vehicles as their preferred mode of transport. Apart from the environmental impacts shifting away from individual vehicles brings, an efficient public transport system relieves traffic congestion. Public transport systems consist of various intricate mechanisms and factors, which poses a challenge when governments and city planners design and implement an effective transport system network that serve a large volume of commuters in their daily lives. Furthermore, developing effective public transport infrastructure requires a deep understanding of qualitative factors, such as commuter preferences and behaviours. 
 
 This work aims to alleviate challenges city planners face when organising the multitudes of moving components by leveraging graph database and graph analytics to uncover insights on how the public transport network is serving commuters in their journeys. From there, gaps and opportunities to optimise efficiency of public transport services can be identified to improve journeys.
 
@@ -54,7 +54,7 @@ Thus, another dataset that is more rich should be used. Since there is no trip l
 
 #### Bus Routes and Bus Stops
 
-The bus stop dataset is obtained from Miranda Adams's [NYC-bus-stops-by-route Github page](https://github.com/miranda-adams/NYC-bus-stops-by-route), which provides a dataset with the bus stop names, their IDs as well as their latitudes and longitudes. This bus routes dataset is used to load the vertex `BusStation`.
+The bus stop dataset is obtained from Miranda Adams's [NYC-bus-stops-by-route Github page](https://github.com/miranda-adams/NYC-bus-stops-by-route), which provides a dataset of bus stop names, their IDs as well as their latitudes and longitudes. This bus routes dataset is used to load the vertex `BusStation`.
 
 The bus routes dataset is obtained from the [Metropolitan Transportation Authority (MTA) website](https://bustime.mta.info/m), where the mobile version of their Bus Time page lists all their bus services. Searching for a bus service lists all the bus stops, their IDs and their sequences. This data is joined with the data from the Github page to get the latitude and longitude for each bus stop. This bus routes dataset is used to load the edge `serve` from `BusService` to `BusStation`.
 
@@ -127,7 +127,7 @@ We learnt much more about TigerGraph as a platform, constructing GSQL, the Pytho
 ## What's next for PlaNET
 
   - Utilise GNN to model and simulate trips to better understand and interpret consumer trip preferences
-  - Perform geospatial analysis on the transport network
+  - Perform more in-depth geospatial analysis on the transport network to uncover spatio-temporal travel patterns
   - Getting actual public transport trips data to analyse 
 
 
